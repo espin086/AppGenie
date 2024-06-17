@@ -164,7 +164,7 @@ class CodeGeneratorApp:
             if option == "Generate" and summary:
                 zf.writestr("main.py", summary)
 
-        download_path = os.path.expanduser("~/Downloads/AppGenie.zip")
+        download_path = os.path.expanduser("AppGenie.zip")
         with open(download_path, "wb") as f:
             f.write(self.zip_buffer.getvalue())
 
