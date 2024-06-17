@@ -171,3 +171,11 @@ class CodeGeneratorApp:
 
 if __name__ == "__main__":
     CodeGeneratorApp()
+    with open("AppGenie.zip", "rb") as file:
+    btn = st.download_button(
+        label="Download App",
+        data=file,
+        file_name="appgenie.zip",
+        mime="application/zip"
+    )
+
