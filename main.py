@@ -15,6 +15,7 @@ from streamlithandler import StreamlitApp
 from excel import ExcelHandler
 from bigqueryhandler import BigQueryHandler
 from dataprocessor import DataFrameCleaner
+from gpt import generate_completion
 
 # Configure logging
 logging.basicConfig(
