@@ -1,7 +1,7 @@
 numba==0.60.0
 llvmlite
 numpy<2.0.0,>=1.26.0
-openai
+openai==0.28.1
 pandas
 plotly
 protobuf
