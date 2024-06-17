@@ -1,5 +1,4 @@
 import streamlit as st
-from gpt import generate_completion
 import config
 import zipfile
 from io import BytesIO
@@ -8,6 +7,7 @@ from argparse import ArgumentParser
 import os
 
 # Necessary imports for various functionalities
+
 from dataexplorer import DataFrameProfiler
 from sqlitecrud import SQLiteCRUD
 from csvhandler import CSVHandler
@@ -105,6 +105,8 @@ def get_summary(model: str, role: str, prompt: str) -> str:
 
 
 class CodeGeneratorApp:
+    """The Code Generator App class."""
+
     def __init__(self):
         st.set_page_config(page_title="Code Generator App", layout="centered")
         self.zip_buffer = BytesIO()  # Make zip_buffer an instance variable
@@ -138,7 +140,7 @@ class CodeGeneratorApp:
         """
 
         if render_summary_button():
-            summary = get_summary(
+            summary = generate_completion(
                 config.GPT_MODEL, config.UserConfig().job_title, prompt
             )
             st.success(
@@ -167,9 +169,5 @@ class CodeGeneratorApp:
             f.write(self.zip_buffer.getvalue())
 
 
-def main():
-    CodeGeneratorApp()
-
-
 if __name__ == "__main__":
-    main()
+    CodeGeneratorApp()
