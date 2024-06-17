@@ -149,7 +149,7 @@ class CodeGeneratorApp:
             st.code(summary, language="python")
 
             self.download_zip(option="Generate", summary=summary)
-            st.info("Check your download folder to see the code.")
+            st.info("Press button below to download your code/app!.")
 
     def download_zip(self, option: str, summary: str = None):
         """Enables downloading the helper modules and generated code as a zip file.
