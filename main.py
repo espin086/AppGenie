@@ -5,6 +5,7 @@ import zipfile
 from io import BytesIO
 import logging
 from argparse import ArgumentParser
+import os
 
 # Necessary imports for various functionalities
 from dataexplorer import DataFrameProfiler
@@ -38,8 +39,8 @@ HOW_TO_SUMMARIZE = f"""You need to provide an python code.
 
 Requirements for Code:
 - Produce Docstrings for the module, classes, and functions, using the Google Docstring Format.
-- Ensure usage of classes and best practices of object-oriented programming. YOu want to have a class that is responsible for the main functionality of the code.
-- Develop a main function that uses the classes that accepts useful and important command line arguments viaargparse(not sys).
+- Ensure usage of classes and best practices of object-oriented programming. You want to have a class that is responsible for the main functionality of the code.
+- Develop a main function that uses the classes that accepts useful and important command line arguments via argparse (not sys).
 - Operate logging for methods, functions, etc., using the logging library and consistent logging of info, warning, error, etc. where practical.
 - Format the generated code beautifully following the Black standard.
 - Can you provide a diagram showing how the code works? Say a sequence diagram, flowchart, or a UML diagram as well, this is required
@@ -58,7 +59,7 @@ Code: {content}
 HOW_TO_SUMMARIZE += """
 Include the following:
 - A class that is responsible for the main functionality of the code.
-- A main function that uses the classes that accepts useful and important command line arguments via argparse(not sys).
+- A main function that uses the classes that accepts useful and important command line arguments via argparse (not sys).
 - Operate logging for methods, functions, etc., using the logging library and consistent logging of info, warning, error, etc. where practical.
 - Format the generated code beautifully following the Black standard.
 - Can you provide a diagram showing how the code works? Say a sequence diagram, flowchart, or a UML diagram as well, this is required
@@ -139,11 +140,13 @@ class CodeGeneratorApp:
             summary = get_summary(
                 config.GPT_MODEL, config.UserConfig().job_title, prompt
             )
-            st.success("🎉 Your code has been generated successfully!")
+            st.success(
+                "🎉 Your code has been generated successfully! Check your Downloads folder!!!"
+            )
             st.code(summary, language="python")
 
             self.download_zip(option="Generate", summary=summary)
-            self.download_zip(option="Helper Modules")
+            st.info("Check your download folder to see the code.")
 
     def download_zip(self, option: str, summary: str = None):
         """Enables downloading the helper modules and generated code as a zip file.
@@ -158,12 +161,9 @@ class CodeGeneratorApp:
             if option == "Generate" and summary:
                 zf.writestr("main.py", summary)
 
-        st.download_button(
-            label="📥 Download Your App",
-            data=self.zip_buffer.getvalue(),  # And here
-            file_name="AppGenie.zip",
-            mime="application/zip",
-        )
+        download_path = os.path.expanduser("~/Downloads/AppGenie.zip")
+        with open(download_path, "wb") as f:
+            f.write(self.zip_buffer.getvalue())
 
 
 def main():
