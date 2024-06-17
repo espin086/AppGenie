@@ -4,4 +4,4 @@ pandas==1.5.3
 plotly==5.16.1
 protobuf==3.20.3
 streamlit==1.25.0
-ydata_profiling==4.8.3
+ydata-profiling==4.8.3
