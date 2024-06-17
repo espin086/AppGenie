@@ -144,7 +144,7 @@ class CodeGeneratorApp:
                 config.GPT_MODEL, config.UserConfig().job_title, prompt
             )
             st.success(
-                "🎉 Your code has been generated successfully! Check your Downloads folder!!!"
+                "🎉 Your code has been generated successfully! Press DOWNLOAD at end of output below!!!"
             )
             st.code(summary, language="python")
 
