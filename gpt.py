@@ -12,7 +12,7 @@ openai.api_key = st.secrets["openai"]["key"]
 openai.organization = st.secrets["openai"]["org"]
 
 
-def _generate_completion(model, role, prompt):
+def generate_completion(model, role, prompt):
     """
     This function generates text based on a prompt.
     """
