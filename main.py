@@ -158,6 +158,13 @@ class CodeGeneratorApp:
             option (str): Option to cover either 'Generate' or 'Helper Modules'.
             summary (str, optional): Summary of the generated code. Defaults to None.
         """
+
+        summary = generate_completion(
+            model=config.GPT_MODEL,
+            role=config.UserConfig().job_title,
+            prompt="Only return the python code ignore the rest of the text that is not pure python code.",
+        )
+
         with zipfile.ZipFile(self.zip_buffer, "w") as zf:  # Use self.zip_buffer here
             for name, content in file_contents.items():
                 zf.writestr(name, content)
