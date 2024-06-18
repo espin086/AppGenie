@@ -32,6 +32,7 @@ file_names = [
     "excel.py",
     "bigqueryhandler.py",
     "dataprocessor.py",
+    "requirements.txt",
 ]
 
 file_contents = {name: open(name).read() for name in file_names}
