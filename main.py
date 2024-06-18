@@ -162,7 +162,7 @@ class CodeGeneratorApp:
         summary = generate_completion(
             model=config.GPT_MODEL,
             role=config.UserConfig().job_title,
-            prompt=f"Only return the python code ignore the rest of the text that is not pure python code.Here is the text to remove python code from: {summary}",
+            prompt=f"Only return the python code ignore the rest of the text that is not pure python code.Here is the text to remove python code from. You also want to remove any ```python and ``` symbols, what you return must be a runable python program here is the text you need to reference: {summary}",
         )
 
         with zipfile.ZipFile(self.zip_buffer, "w") as zf:  # Use self.zip_buffer here
