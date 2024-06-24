@@ -22,7 +22,7 @@ logging.info("imported openai api keys")
 class Model:
     """This and returns a model."""
 
-    def __init__(self, model="gpt-4o", role="system", prompt="this is a test"):
+    def __init__(self, model="gpt-4", role="system", prompt="this is a test"):
         self.model = model
         self.prompt = prompt
         self.role = role
