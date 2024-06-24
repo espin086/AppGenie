@@ -33,6 +33,7 @@ file_names = [
     "bigqueryhandler.py",
     "dataprocessor.py",
     "requirements.txt",
+    "snowflakehandler.py",
 ]
 
 file_contents = {name: open(name).read() for name in file_names}
@@ -54,10 +55,10 @@ Note: I have a set of classes already that I can import to make the code more mo
 # Adding helper class details to the prompt
 for name, content in file_contents.items():
     HOW_TO_SUMMARIZE += f"""
-Name: {name}
+        Name: {name}
 
-Code: {content}
-"""
+        Code: {content}
+        """
 HOW_TO_SUMMARIZE += """
 Include the following:
 - A class that is responsible for the main functionality of the code.
