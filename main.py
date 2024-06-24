@@ -16,7 +16,7 @@ from excel import ExcelHandler
 from bigqueryhandler import BigQueryHandler
 from dataprocessor import DataFrameCleaner
 
-from gpt import Model, TOCD
+from gpt import GPTModelHandler, TOCD
 
 # Configure logging
 logging.basicConfig(
@@ -93,7 +93,7 @@ def render_summary_button() -> bool:
     return st.button("Write App", key="btn_summarize")
 
 
-class CodeGeneratorApp(Model):
+class CodeGeneratorApp(GPTModelHandler):
     """The Code Generator App class."""
 
     def __init__(self):
