@@ -137,7 +137,7 @@ class CodeGeneratorApp(GPTModelHandler):
                 context="you are going to run this code locally so make it easy to run and understand.",
                 data="Don't forget to include the classes I have in the prompt.",
             )
-            summary = oTOCD.generate_response()
+            summary = oTOCD.generate_response(oTOCD.prompt)
             st.success(
                 "🎉 Your code has been generated successfully! Press DOWNLOAD at end of output below!!!"
             )
