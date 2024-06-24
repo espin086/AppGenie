@@ -97,6 +97,7 @@ class CodeGeneratorApp(GPTModelHandler):
     """The Code Generator App class."""
 
     def __init__(self):
+        super().__init__()
         st.set_page_config(page_title="Code Generator App", layout="centered")
         self.zip_buffer = BytesIO()  # Make zip_buffer an instance variable
         self.prompt = ""
