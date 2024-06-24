@@ -1,4 +1,5 @@
 import logging
+import openai
 from openai import OpenAI
 import streamlit as st
 
@@ -10,45 +11,56 @@ logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-client = OpenAI()
-
-logging.info("imported openai api keys")
+API_KEY = st.secrets["openai"]["key"]
 
 
-class Model:
-    """This and returns a model."""
+class GPTModelHandler:
+    """Handles GPT Model Operations."""
 
-    def __init__(self, model="gpt-4o", role="system", prompt="this is a test"):
+    def __init__(self, api_key: str = API_KEY, model: str = "gpt-3.5-turbo"):
+        """
+        Initialize the GPTModelHandler.
+
+        Args:
+            api_key (str): The API key for OpenAI.
+            model (str): The GPT model to use. Default is 'gpt-3.5-turbo'.
+        """
+        self.api_key = api_key
         self.model = model
-        self.prompt = prompt
-        self.role = role
-        logging.info(f"instance of Response class created using model: {self.model}")
+        openai.api_key = self.api_key
 
-    def response(self):
+    def generate_response(self, prompt: str, system_role="system"):
         """
-        This function generates text based on a prompt.
+        Generate response from GPT model.
+
+        Args:
+            prompt (str): The prompt for the GPT model.
+            system_role (str): The role for the prompt. Default is 'system'.
+
+        Returns:
+            str: The generated response.
         """
-        messages = [{"role": self.role, "content": self.prompt}]
-        response = client.chat.completions.create(
+        messages = [{"role": system_role, "content": prompt}]
+        response = openai.ChatCompletion.create(
             model=self.model,
             messages=messages,
         )
-        logging.info("generated GPT response")
-        return response.choices[0].message.content
+        logging.info("Generated GPT response")
+        return response.choices[0].message["content"]
 
 
-class PromptOptimizer(Model):
+class PromptOptimizer(GPTModelHandler):
     """This optimizes promps that come in"""
 
     def __init__(self, prompt="this is a test"):
-        super().__init__(prompt=prompt)
+        super().__init__()
         self.prompt = f""" You are a world class prompt engineer. Please improve and enhance this prompt: {prompt}.   Guidelines:
         - Use your analytics prowness and creative imagination to return a stellar prompt for me.
         - Output should not include any explanation on the changes, just the revied prompts"""
         logging.info("Updated prompt for optimization")
 
 
-class TOCD(Model):
+class TOCD(GPTModelHandler):
     """Template: Task, Output, Context, Data"""
 
     def __init__(self, task, output, context, data):
@@ -72,7 +84,7 @@ class TOCD(Model):
         logging.info(f"instance of TOCD class created using model: {self.model}")
 
 
-class RTAO(Model):
+class RTAO(GPTModelHandler):
     """Role, Task, Audience, Output"""
 
     def __init__(self, role, task, audience, output):
@@ -94,7 +106,7 @@ class RTAO(Model):
         """
 
 
-class Ultimate(Model):
+class Ultimate(GPTModelHandler):
     "The ultimate prompt template"
 
     def __init__(self, role, behavior, task, structure, constraints, data):
