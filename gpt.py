@@ -33,6 +33,7 @@ class GPTModelHandler:
         self.api_key = api_key
         self.model = model
         self.client = OpenAI(api_key=self.api_key)
+        self.prompt = prompt
 
     def generate_response(self, system_role="system"):
         """
