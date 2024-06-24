@@ -15,7 +15,9 @@ from streamlithandler import StreamlitApp
 from excel import ExcelHandler
 from bigqueryhandler import BigQueryHandler
 from dataprocessor import DataFrameCleaner
-from gpt import Model
+
+from gpt import Model, TOCD
+
 
 # Configure logging
 logging.basicConfig(
@@ -103,7 +105,7 @@ def get_summary(prompt: str) -> str:
     Returns:
         str: The generated summary text.
     """
-    summary = Model.response(prompt)
+    summary = Model.response(prompt=self.prompt)
     return summary
 
 
@@ -143,7 +145,13 @@ class CodeGeneratorApp:
         """
 
         if render_summary_button():
-            summary = Model.response(prompt)
+            oTOCD = TOCD(
+                task="prompt",
+                output="write code, diagrams, and explanation",
+                context="you are working at real estate and finance companies.",
+                data="Don't forget to include the classes I have in the prompt.",
+            )
+            summary = oTOCD.response()
             st.success(
                 "🎉 Your code has been generated successfully! Press DOWNLOAD at end of output below!!!"
             )

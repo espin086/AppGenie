@@ -33,7 +33,7 @@ class Model:
         This function generates text based on a prompt.
         """
         completion = openai.Completion.create(
-            model=self.model,
+            model=self.model
             prompt=self.prompt,
         )
         logging.info("generated GPT response")
