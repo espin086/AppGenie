@@ -59,6 +59,10 @@ class PromptOptimizer(GPTModelHandler):
         - Output should not include any explanation on the changes, just the revied prompts"""
         logging.info("Updated prompt for optimization")
 
+    def response(self):
+        """Generate response for the prompt optimizer."""
+        return self.generate_response(self.prompt)
+
 
 class TOCD(GPTModelHandler):
     """Template: Task, Output, Context, Data"""
@@ -83,6 +87,10 @@ class TOCD(GPTModelHandler):
         """
         logging.info(f"instance of TOCD class created using model: {self.model}")
 
+    def response(self):
+        """Generate response for the TOCD template."""
+        return self.generate_response(self.prompt)
+
 
 class RTAO(GPTModelHandler):
     """Role, Task, Audience, Output"""
@@ -104,6 +112,10 @@ class RTAO(GPTModelHandler):
 
         Your response should confirm to this output: {self.output}
         """
+
+    def response(self):
+        """Generate response for the RTAO template."""
+        return self.generate_response(self.prompt)
 
 
 class Ultimate(GPTModelHandler):
@@ -129,6 +141,10 @@ class Ultimate(GPTModelHandler):
 
         You can reference this data to help you with your response: {self.data}
         """
+
+    def response(self):
+        """Generate response for the Ultimate template."""
+        return self.generate_response(self.prompt)
 
 
 if __name__ == "__main__":
