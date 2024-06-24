@@ -3,11 +3,8 @@ from openai import OpenAI
 import streamlit as st
 
 """
-
 This is a GPT text generation module. It is used to generate text based on a prompt.
-
 """
-
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -21,7 +18,7 @@ logging.info("imported openai api keys")
 class Model:
     """This and returns a model."""
 
-    def __init__(self, model="gpt-3.5-turbo", role="system", prompt="this is a test"):
+    def __init__(self, model="gpt-4o", role="system", prompt="this is a test"):
         self.model = model
         self.prompt = prompt
         self.role = role
@@ -44,7 +41,7 @@ class PromptOptimizer(Model):
     """This optimizes promps that come in"""
 
     def __init__(self, prompt="this is a test"):
-        super().__init__(prompt)
+        super().__init__(prompt=prompt)
         self.prompt = f""" You are a world class prompt engineer. Please improve and enhance this prompt: {prompt}.   Guidelines:
         - Use your analytics prowness and creative imagination to return a stellar prompt for me.
         - Output should not include any explanation on the changes, just the revied prompts"""
@@ -119,26 +116,10 @@ class Ultimate(Model):
         Note: here are the relevant constaints: {self.constraints}
 
         You can reference this data to help you with your response: {self.data}
-
-
-
         """
 
 
-class FiveWsandHow(Model):
-    pass
-
-
-class SWOT(Model):
-    pass
-
-
-class PESTEL(Model):
-    pass
-
-
 if __name__ == "__main__":
-
     TASK = (
         "give me ideas on how to write python to speed up my work as a data scientist"
     )
