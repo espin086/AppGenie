@@ -136,7 +136,7 @@ class CodeGeneratorApp(GPTModelHandler):
                 context="you are going to run this code locally so make it easy to run and understand.",
                 data="Don't forget to include the classes I have in the prompt.",
             )
-            summary = oTOCD.response()
+            summary = oTOCD.generate_response()
             st.success(
                 "🎉 Your code has been generated successfully! Press DOWNLOAD at end of output below!!!"
             )
@@ -165,7 +165,7 @@ class CodeGeneratorApp(GPTModelHandler):
 
 
 if __name__ == "__main__":
-    CodeGeneratorApp()
+    CodeGeneratorApp(GPTModelHandler)
     with open("AppGenie.zip", "rb") as file:
         btn = st.download_button(
             label="Download App",
