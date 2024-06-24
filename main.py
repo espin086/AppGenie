@@ -142,9 +142,7 @@ class CodeGeneratorApp:
         """
 
         if render_summary_button():
-            summary = generate_completion(
-                config.GPT_MODEL, config.UserConfig().job_title, prompt
-            )
+            summary = Model.response(prompt)
             st.success(
                 "🎉 Your code has been generated successfully! Press DOWNLOAD at end of output below!!!"
             )
