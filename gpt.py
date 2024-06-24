@@ -26,21 +26,18 @@ class Model:
         self.model = model
         self.prompt = prompt
         self.role = role
-        logging.info(f"instance of Resonse class created using model: {self.model}")
+        logging.info(f"instance of Response class created using model: {self.model}")
 
     def response(self):
         """
         This function generates text based on a prompt.
         """
-        completion = openai.ChatCompletion.create(
+        completion = openai.Completion.create(
             model=self.model,
-            messages=[
-                {"role": "system", "content": self.role},
-                {"role": "user", "content": self.prompt},
-            ],
+            prompt=self.prompt,
         )
-        logging.info("generated LLM response")
-        return completion.choices[0].message["content"]
+        logging.info("generated GPT response")
+        return completion.choices[0].text
 
 
 class PromptOptimizer(Model):
