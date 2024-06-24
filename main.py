@@ -165,7 +165,10 @@ class CodeGeneratorApp(GPTModelHandler):
 
 
 if __name__ == "__main__":
-    CodeGeneratorApp(GPTModelHandler)
+    app = CodeGeneratorApp()
+
+    # Download button
+
     with open("AppGenie.zip", "rb") as file:
         btn = st.download_button(
             label="Download App",
