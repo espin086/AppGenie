@@ -17,7 +17,7 @@ API_KEY = st.secrets["openai"]["key"]
 class GPTModelHandler:
     """Handles GPT Model Operations."""
 
-    def __init__(self, api_key: str = API_KEY, model: str = "gpt-3.5-turbo"):
+    def __init__(self, api_key: str = API_KEY, model: str = "gpt-4o"):
         """
         Initialize the GPTModelHandler.
 
@@ -27,7 +27,7 @@ class GPTModelHandler:
         """
         self.api_key = api_key
         self.model = model
-        openai.api_key = self.api_key
+        self.client = OpenAI(api_key=self.api_key)
 
     def generate_response(self, prompt: str, system_role="system"):
         """
@@ -41,12 +41,12 @@ class GPTModelHandler:
             str: The generated response.
         """
         messages = [{"role": system_role, "content": prompt}]
-        response = openai.ChatCompletion.create(
+        response = self.client.chat.completions.create(
             model=self.model,
             messages=messages,
         )
         logging.info("Generated GPT response")
-        return response.choices[0].message["content"]
+        return response.choices[0].message.content
 
 
 class PromptOptimizer(GPTModelHandler):
