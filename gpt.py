@@ -1,20 +1,19 @@
+import logging
+from openai import OpenAI
+import streamlit as st
+
 """
 
 This is a GPT text generation module. It is used to generate text based on a prompt.
 
 """
 
-import logging
-import openai
-
-import streamlit as st
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-openai.api_key = st.secrets["openai"]["key"]
-openai.organization = st.secrets["openai"]["org"]
+client = OpenAI()
 
 logging.info("imported openai api keys")
 
@@ -22,7 +21,7 @@ logging.info("imported openai api keys")
 class Model:
     """This and returns a model."""
 
-    def __init__(self, model="gpt-4", role="system", prompt="this is a test"):
+    def __init__(self, model="gpt-3.5-turbo", role="system", prompt="this is a test"):
         self.model = model
         self.prompt = prompt
         self.role = role
@@ -32,12 +31,13 @@ class Model:
         """
         This function generates text based on a prompt.
         """
-        completion = openai.Completion.create(
+        messages = [{"role": self.role, "content": self.prompt}]
+        response = client.chat.completions.create(
             model=self.model,
-            prompt=self.prompt,
+            messages=messages,
         )
         logging.info("generated GPT response")
-        return completion.choices[0].text
+        return response.choices[0].message.content
 
 
 class PromptOptimizer(Model):
