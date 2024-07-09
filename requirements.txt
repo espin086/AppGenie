@@ -8,3 +8,5 @@ protobuf
 streamlit
 ydata-profiling
 google-cloud-bigquery
+dedup
+unidecode
