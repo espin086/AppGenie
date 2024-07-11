@@ -14,11 +14,11 @@ Usage:
 
     -v or --verbose option can be used to increase verbosity level. It can be specified multiple times for more verbosity.
 
+    Here is an example of the command line usage: python3 dedup_csv.py -v -i "listings_with_duplicates.csv" --output OUTPUT --settings SETTINGS --training TRAINING --fields "listing_dt" "address" "name" "phone_number" "listing_agent_full_name" "buying_agent_full_name"
+
 Required Libraries: 
     Python Standard Library, dedupe, unidecode
 """
-
-
 import os
 import csv
 import re
@@ -27,6 +27,7 @@ import json
 import argparse
 
 import dedupe
+import dedupe.variables
 from unidecode import unidecode
 
 
@@ -46,13 +47,16 @@ def readData(filename):
         reader = csv.DictReader(f)
         for row in reader:
             clean_row = [(k, preProcess(v)) for (k, v) in row.items()]
-            row_id = row["ID"]
+            row_id = row["listing_id"]
             data_d[row_id] = dict(clean_row)
     return data_d
 
 
 def defineFields(fields):
-    return [{"field": field, "type": "String", "has missing": True} for field in fields]
+    field_definitions = []
+    for field in fields:
+        field_definitions.append(dedupe.variables.String(field, has_missing=True))
+    return field_definitions
 
 
 def setup(input_file, output_file, settings_file, training_file, fields):
@@ -70,15 +74,15 @@ def setup(input_file, output_file, settings_file, training_file, fields):
         else:
             deduper.prepare_training(data_d)
 
-        dedupe.consoleLabel(deduper)
+        dedupe.console_label(deduper)
 
         deduper.train()
 
         with open(training_file, "w") as tf:
-            deduper.writeTraining(tf)
+            deduper.write_training(tf)
 
         with open(settings_file, "wb") as sf:
-            deduper.writeSettings(sf)
+            deduper.write_settings(sf)
 
     clustered_dupes = deduper.match(data_d, 0.5)
     return clustered_dupes
