@@ -81,6 +81,11 @@ def render_text_area(section_title: str, help_text: str) -> str:
     Returns:
         str: The text entered by the user in the text area.
     """
+
+    assert isinstance(section_title, str), "section_title must be a string."
+    assert isinstance(help_text, str), "help_text must be a string."
+
+
     return st.text_area(section_title, help=help_text, key=section_title)
 
 
