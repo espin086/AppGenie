@@ -6,7 +6,7 @@ import os
 class CSVHandler:
     """Class to handle CSV files."""
 
-    def __init__(self, file_path, delimiter=","):
+    def __init__(self, file_path: str, delimiter:str =",") -> None:
         """
         Initialize the CSVHandler.
 
@@ -14,6 +14,10 @@ class CSVHandler:
             file_path (str): Path to the CSV file.
             delimiter (str): Delimiter used in the CSV file.
         """
+        assert isinstance(file_path, str), "file_path must be a string."
+        assert isinstance(delimiter, str), "delimiter must be a string."
+
+
         self.file_path = file_path
         self.delimiter = delimiter
         self.dataframe = None
@@ -23,7 +27,7 @@ class CSVHandler:
         if not os.path.isfile(self.file_path):
             open(self.file_path, "w").close()
 
-    def read_csv(self):
+    def read_csv(self) -> pd.DataFrame:
         """
         Read the CSV file with the specified delimiter.
 
@@ -38,7 +42,7 @@ class CSVHandler:
             self.logger.error(f"Error reading CSV file: {e}")
             return None
 
-    def save_csv(self, df, index=False):
+    def save_csv(self, df:pd.DataFrame, index:bool=False) -> None:
         """
         Save a DataFrame to the CSV file with the specified delimiter.
 
@@ -55,7 +59,7 @@ class CSVHandler:
         except Exception as e:
             self.logger.error(f"Error saving CSV file: {e}")
 
-    def append_csv(self, df, index=False):
+    def append_csv(self, df:pd.DataFrame, index:bool=False) -> None:
         """
         Append a DataFrame to the existing CSV file with the specified delimiter.
 
@@ -63,6 +67,10 @@ class CSVHandler:
             df (DataFrame): DataFrame to append.
             index (bool): Boolean flag to include index in CSV. Default is False.
         """
+
+        assert isinstance(df, pd.DataFrame), "df must be a DataFrame."
+        assert isinstance(index, bool), "index must be a boolean."
+
         try:
             df.to_csv(
                 self.file_path,
@@ -81,7 +89,7 @@ class CSVHandler:
         except Exception as e:
             self.logger.error(f"Error appending to CSV file: {e}")
 
-    def update_csv(self, df, index=False):
+    def update_csv(self, df:pd.DataFrame, index:bool=False) -> None:
         """
         Update the CSV file with a new DataFrame, overwriting existing content.
 
@@ -92,7 +100,7 @@ class CSVHandler:
         self.save_csv(df, index=index)
         self.dataframe = df
 
-    def get_dataframe(self):
+    def get_dataframe(self) -> pd.DataFrame:
         """
         Get the DataFrame of the CSV data.
 
