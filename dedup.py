@@ -31,7 +31,7 @@ import dedupe.variables
 from unidecode import unidecode
 
 
-def preProcess(column):
+def preProcess(column: str) -> str:
     column = unidecode(column)
     column = re.sub("  +", " ", column)
     column = re.sub("\n", " ", column)
@@ -41,7 +41,11 @@ def preProcess(column):
     return column
 
 
-def readData(filename):
+def readData(filename: str) -> dict:
+
+    assert os.path.exists(filename), "File not found."
+    assert isinstance(filename, str), "Filename must be a string."
+
     data_d = {}
     with open(filename) as f:
         reader = csv.DictReader(f)
@@ -52,14 +56,23 @@ def readData(filename):
     return data_d
 
 
-def defineFields(fields):
+def defineFields(fields: list) -> list:
     field_definitions = []
     for field in fields:
         field_definitions.append(dedupe.variables.String(field, has_missing=True))
     return field_definitions
 
 
-def setup(input_file, output_file, settings_file, training_file, fields):
+def setup(input_file:str, output_file:str, settings_file:str, training_file:str, fields:list) -> list:
+    
+    assert os.path.exists(input_file), "Input file not found."
+    assert isinstance(input_file, str), "Input file must be a string."
+    assert isinstance(output_file, str), "Output file must be a string."
+    assert isinstance(settings_file, str), "Settings file must be a string."
+    assert isinstance(training_file, str), "Training file must be a string."
+    assert isinstance(fields, list), "Fields must be a list."
+    
+
     data_d = readData(input_file)
     if os.path.exists(settings_file):
         print("reading from", settings_file)
@@ -88,7 +101,7 @@ def setup(input_file, output_file, settings_file, training_file, fields):
     return clustered_dupes
 
 
-def writeResults(clustered_dupes, output_file):
+def writeResults(clustered_dupes, output_file:str) -> None:
     cluster_membership = {}
     for cluster_id, (records, scores) in enumerate(clustered_dupes):
         for record_id, score in zip(records, scores):

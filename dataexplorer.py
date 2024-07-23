@@ -13,7 +13,7 @@ logging.basicConfig(
 class DataFrameProfiler:
     """Class to profile a dataframe using ydata-profiling."""
 
-    def __init__(self, dataframe: pd.DataFrame, title: str = "Data Profiling Report"):
+    def __init__(self, dataframe: pd.DataFrame, title: str = "Data Profiling Report") -> None:
         """
         Initializes the DataFrameProfiler with a dataframe.
 
@@ -21,13 +21,17 @@ class DataFrameProfiler:
             dataframe (pd.DataFrame): The dataframe to profile.
             title (str): The title of the profiling report.
         """
+
+        assert isinstance(dataframe, pd.DataFrame), "dataframe must be a DataFrame."
+        assert isinstance(title, str), "title must be a string."
+
         self.dataframe = dataframe
         self.title = title
         self.profile = ProfileReport(dataframe, title=title)
 
     def generate_report(
         self, output_format: str = "html", output_file: str = "report.html"
-    ):
+    ) -> None:
         """
         Generates the profiling report and saves it to a file.
 
@@ -35,6 +39,10 @@ class DataFrameProfiler:
             output_format (str): The format of the output file. Valid options: 'html', 'json'.
             output_file (str): The name of the output file.
         """
+
+        assert isinstance(output_format, str), "output_format must be a string."
+        assert isinstance(output_file, str), "output_file must be a string."
+
         if output_format == "html":
             self.profile.to_file(output_file)
             logging.info(f"Report generated and saved to {output_file} in HTML format.")
