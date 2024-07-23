@@ -17,17 +17,20 @@ class SnowflakeQueryRunner:
         connection_params (dict): Dictionary containing Snowflake connection parameters.
     """
 
-    def __init__(self, connection_params: dict):
+    def __init__(self, connection_params: dict) -> None:
         """
         Initializes the SnowflakeQueryRunner with connection parameters.
 
         Args:
             connection_params (dict): Snowflake connection parameters.
         """
+
+        assert isinstance(connection_params, dict), "connection_params must be a dictionary."
+
         self.connection_params = connection_params
         self.connection = None
 
-    def connect_to_snowflake(self):
+    def connect_to_snowflake(self) -> None:
         """
         Connects to the Snowflake database.
 
@@ -39,7 +42,7 @@ class SnowflakeQueryRunner:
             logging.info("Connected to Snowflake.")
         except Exception as e:
             logging.error(f"Failed to connect to Snowflake: {e}")
-            raise
+            raise e
 
     def execute_query(self, query: str) -> pd.DataFrame:
         """
@@ -51,6 +54,9 @@ class SnowflakeQueryRunner:
         Returns:
             pd.DataFrame: The result of the query as a DataFrame.
         """
+
+        assert isinstance(query, str), "query must be a string."
+
         try:
             cursor = self.connection.cursor()
             cursor.execute("alter session set rows_per_resultset = 0")
@@ -64,7 +70,7 @@ class SnowflakeQueryRunner:
             logging.error(f"Failed to execute query: {e}")
             return None
 
-    def close_connection(self):
+    def close_connection(self) -> None:
         """
         Closes the connection to Snowflake.
         """
