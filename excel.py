@@ -4,18 +4,21 @@ import argparse
 
 
 class ExcelHandler:
-    def __init__(self, file_path):
+    def __init__(self, file_path: str) -> None:
         self.file_path = file_path
         self.dataframes = {}
         self.logger = logging.getLogger(__name__)
 
-    def read_sheet(self, sheet_name):
+    def read_sheet(self, sheet_name: str) -> pd.DataFrame:
         """
         Read a specific sheet from the Excel file.
 
         :param sheet_name: Name of the sheet to read.
         :return: DataFrame containing the sheet data.
         """
+
+        assert isinstance(sheet_name, str), "sheet_name must be a string."
+
         try:
             df = pd.read_excel(self.file_path, sheet_name=sheet_name)
             self.dataframes[sheet_name] = df
@@ -24,7 +27,7 @@ class ExcelHandler:
         except Exception as e:
             self.logger.error(f"Error reading sheet {sheet_name}: {e}")
 
-    def read_all_sheets(self):
+    def read_all_sheets(self) -> dict:
         """
         Read all sheets from the Excel file.
 
@@ -39,13 +42,17 @@ class ExcelHandler:
         except Exception as e:
             self.logger.error(f"Error reading all sheets: {e}")
 
-    def save_sheet(self, df, sheet_name):
+    def save_sheet(self, df:pd.DataFrame, sheet_name: str) -> None:
         """
         Save a DataFrame to a specific sheet in the Excel file.
 
         :param df: DataFrame to save.
         :param sheet_name: Name of the sheet to save the DataFrame to.
         """
+
+        assert isinstance(sheet_name, str), "sheet_name must be a string."
+        assert isinstance(df, pd.DataFrame), "df must be a pandas DataFrame."∂∂∂∂
+
         try:
             with pd.ExcelWriter(
                 self.file_path, engine="openpyxl", mode="a", if_sheet_exists="replace"
@@ -56,7 +63,7 @@ class ExcelHandler:
         except Exception as e:
             self.logger.error(f"Error saving sheet {sheet_name}: {e}")
 
-    def save_all_sheets(self):
+    def save_all_sheets(self) -> None:
         """
         Save all DataFrames in the dataframes dictionary to the Excel file.
         """
@@ -68,16 +75,19 @@ class ExcelHandler:
         except Exception as e:
             self.logger.error(f"Error saving all sheets: {e}")
 
-    def get_dataframe(self, sheet_name):
+    def get_dataframe(self, sheet_name: str) -> pd.DataFrame:
         """
         Get the DataFrame of a specific sheet.
 
         :param sheet_name: Name of the sheet.
         :return: DataFrame containing the sheet data.
         """
+
+        assert isinstance(sheet_name, str), "sheet_name must be a string."
+
         return self.dataframes.get(sheet_name, None)
 
-    def list_sheets(self):
+    def list_sheets(self) -> list:
         """
         List all sheet names in the Excel file.
 
