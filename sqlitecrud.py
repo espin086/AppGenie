@@ -15,17 +15,20 @@ class SQLiteCRUD:
         connection (sqlite3.Connection): The SQLite database connection object.
     """
 
-    def __init__(self, db_name):
+    def __init__(self, db_name: str) -> None:
         """
         Initialize the SQLiteCRUD with a database name.
 
         Args:
             db_name (str): The name of the SQLite database file.
         """
+
+        assert isinstance(db_name, str), "db_name must be a string."
+
         self.db_name = db_name
         self.connection = None
 
-    def connect(self):
+    def connect(self) -> bool:
         """
         Connect to the SQLite database.
 
@@ -40,7 +43,7 @@ class SQLiteCRUD:
             logging.error(f"Error connecting to the database: {e}")
             return False
 
-    def create_table(self, table_name, columns):
+    def create_table(self, table_name:str, columns:list) -> bool:
         """
         Create a table in the SQLite database.
 
@@ -51,6 +54,10 @@ class SQLiteCRUD:
         Returns:
             bool: Returns True if table creation is successful, otherwise False.
         """
+
+        assert isinstance(columns, list), "columns must be a list."
+        assert isinstance(table_name, str), "table_name must be a string."
+
         try:
             if self.connection:
                 cursor = self.connection.cursor()
@@ -69,7 +76,7 @@ class SQLiteCRUD:
             logging.error(f"Error creating table: {e}")
             return False
 
-    def insert_data(self, table_name, data):
+    def insert_data(self, table_name: str, data: tuple) -> bool:
         """
         Insert data into a table in the SQLite database.
 
@@ -96,7 +103,7 @@ class SQLiteCRUD:
             logging.error(f"Error inserting data: {e}")
             return False
 
-    def select_data(self, table_name, condition=None):
+    def select_data(self, table_name:str, condition:str =None) -> list:
         """
         Select data from a table in the SQLite database.
 
@@ -107,6 +114,10 @@ class SQLiteCRUD:
         Returns:
             list: A list of rows selected from the table.
         """
+
+        assert isinstance(table_name, str), "table_name must be a string."
+        assert condition is None or isinstance(condition, str), "condition must be a string or None."
+
         try:
             if self.connection:
                 cursor = self.connection.cursor()
@@ -125,7 +136,7 @@ class SQLiteCRUD:
             logging.error(f"Error selecting data: {e}")
             return []
 
-    def update_data(self, table_name, data, condition):
+    def update_data(self, table_name:str, data:dict, condition:str) -> bool:
         """
         Update data in a table in the SQLite database.
 
@@ -137,6 +148,11 @@ class SQLiteCRUD:
         Returns:
             bool: Returns True if data update is successful, otherwise False.
         """
+
+        assert isinstance(data, dict), "data must be a dictionary."
+        assert isinstance(table_name, str), "table_name must be a string."
+        assert isinstance(condition, str), "condition must be a string."
+
         try:
             if self.connection:
                 cursor = self.connection.cursor()
@@ -153,7 +169,7 @@ class SQLiteCRUD:
             logging.error(f"Error updating data: {e}")
             return False
 
-    def delete_data(self, table_name, condition):
+    def delete_data(self, table_name:str, condition:str) -> bool:
         """
         Delete data from a table in the SQLite database.
 
@@ -164,6 +180,10 @@ class SQLiteCRUD:
         Returns:
             bool: Returns True if data deletion is successful, otherwise False.
         """
+
+        assert isinstance(table_name, str), "table_name must be a string."
+        assert isinstance(condition, str), "condition must be a string."
+
         try:
             if self.connection:
                 cursor = self.connection.cursor()
@@ -179,7 +199,7 @@ class SQLiteCRUD:
             logging.error(f"Error deleting data: {e}")
             return False
 
-    def close(self):
+    def close(self) -> None:
         """Close the database connection."""
         if self.connection:
             self.connection.close()
