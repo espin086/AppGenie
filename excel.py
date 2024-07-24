@@ -42,7 +42,7 @@ class ExcelHandler:
         except Exception as e:
             self.logger.error(f"Error reading all sheets: {e}")
 
-    def save_sheet(self, df:pd.DataFrame, sheet_name: str) -> None:
+    def save_sheet(self, df: pd.DataFrame, sheet_name: str) -> None:
         """
         Save a DataFrame to a specific sheet in the Excel file.
 
@@ -51,7 +51,7 @@ class ExcelHandler:
         """
 
         assert isinstance(sheet_name, str), "sheet_name must be a string."
-        assert isinstance(df, pd.DataFrame), "df must be a pandas DataFrame."∂∂∂∂
+        assert isinstance(df, pd.DataFrame), "df must be a pandas DataFrame."
 
         try:
             with pd.ExcelWriter(
