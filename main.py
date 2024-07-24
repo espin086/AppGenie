@@ -25,16 +25,17 @@ logging.basicConfig(
 
 # Loading content of helper modules
 file_names = [
-    "dataexplorer.py",
-    "sqlitecrud.py",
-    "csvhandler.py",
-    "streamlithandler.py",
-    "gpt.py",
-    "excel.py",
     "bigqueryhandler.py",
+    "csvhandler.py",
+    "dataexplorer.py",
     "dataprocessor.py",
-    "requirements.txt",
+    "dedup.py",
+    "excel.py",
+    "gpt.py",
+    "sqlitecrud.py",
     "snowflakehandler.py",
+    "streamlithandler.py",
+    "requirements.txt",
 ]
 
 file_contents = {name: open(name).read() for name in file_names}
@@ -47,7 +48,10 @@ Requirements for Code:
 - Develop a main function that uses the classes that accepts useful and important command line arguments via argparse (not sys).
 - Operate logging for methods, functions, etc., using the logging library and consistent logging of info, warning, error, etc. where practical.
 - Format the generated code beautifully following the Black standard.
-- Can you provide a diagram showing how the code works? Say a sequence diagram, flowchart, or a UML diagram as well, this is required
+- Add type hints to the functions and methods for both input and output.
+- Add assert statements to check the input arguments and the output of the functions.
+- Use try and except blocks to handle exceptions 
+- Functions and methods should return values instead of printing them. If it makes sense you can also return True or False
 
 Note: I have a set of classes already that I can import to make the code more modular and easier to write. Here are the classes I have:
 
@@ -84,7 +88,6 @@ def render_text_area(section_title: str, help_text: str) -> str:
 
     assert isinstance(section_title, str), "section_title must be a string."
     assert isinstance(help_text, str), "help_text must be a string."
-
 
     return st.text_area(section_title, help=help_text, key=section_title)
 
