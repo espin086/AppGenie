@@ -8,5 +8,5 @@ protobuf
 streamlit
 ydata-profiling
 google-cloud-bigquery
-dedup
+dedupe==2.0.24
 unidecode
