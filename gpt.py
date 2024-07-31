@@ -34,15 +34,13 @@ class GPTModelHandler:
         assert isinstance(api_key, str), "api_key must be a string."
         assert isinstance(model, str), "model must be a string."
         assert isinstance(prompt, str), "prompt must be a string."
-        
-
 
         self.api_key = api_key
         self.model = model
         self.client = OpenAI(api_key=self.api_key)
         self.prompt = prompt
 
-    def generate_response(self, system_role:str="system"):
+    def generate_response(self, system_role: str = "system"):
         """
         Generate response from GPT model.
 
@@ -54,7 +52,7 @@ class GPTModelHandler:
             str: The generated response.
         """
 
-        assert isinstance(system_role, str), "system_role must be a string."    
+        # assert isinstance(system_role, str), "system_role must be a string."
 
         messages = [{"role": system_role, "content": self.prompt}]
         response = self.client.chat.completions.create(
@@ -68,7 +66,7 @@ class GPTModelHandler:
 class PromptOptimizer(GPTModelHandler):
     """This optimizes promps that come in"""
 
-    def __init__(self, prompt:str="this is a test") -> None:
+    def __init__(self, prompt: str = "this is a test") -> None:
         super().__init__()
 
         assert isinstance(prompt, str), "prompt must be a string."
@@ -86,7 +84,7 @@ class PromptOptimizer(GPTModelHandler):
 class TOCD(GPTModelHandler):
     """Template: Task, Output, Context, Data"""
 
-    def __init__(self, task:str, output:str, context:str, data:str) -> None:
+    def __init__(self, task: str, output: str, context: str, data: str) -> None:
         """Initializing Class"""
         super().__init__()
 
@@ -120,7 +118,7 @@ class TOCD(GPTModelHandler):
 class RTAO(GPTModelHandler):
     """Role, Task, Audience, Output"""
 
-    def __init__(self, role:str, task:str, audience:str, output:str) -> None:
+    def __init__(self, role: str, task: str, audience: str, output: str) -> None:
         super().__init__()
 
         assert isinstance(role, str), "role must be a string."
@@ -161,7 +159,6 @@ class Ultimate(GPTModelHandler):
         assert isinstance(structure, str), "structure must be a string."
         assert isinstance(constraints, str), "constraints must be a string."
         assert isinstance(data, str), "data must be a string."
-
 
         self.role = role
         self.task = task

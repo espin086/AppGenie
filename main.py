@@ -16,7 +16,7 @@ from excel import ExcelHandler
 from bigqueryhandler import BigQueryHandler
 from dataprocessor import DataFrameCleaner
 
-from gpt import GPTModelHandler, TOCD
+from gpt import GPTModelHandler, TOCD, PromptOptimizer
 
 # Configure logging
 logging.basicConfig(
@@ -137,6 +137,11 @@ class CodeGeneratorApp(GPTModelHandler):
         self.prompt = f"""Here is your task {HOW_TO_SUMMARIZE}. 
         Here are the goals: {feature_input}. 
         """
+        logging.info(f"Prompt: {self.prompt}")
+
+        # optimizing the prompt using best practices
+        oPromptOptimizer = PromptOptimizer(prompt=str(self.prompt))
+        self.prompt = oPromptOptimizer.response()
 
         if render_summary_button():
             oTOCD = TOCD(
@@ -146,6 +151,7 @@ class CodeGeneratorApp(GPTModelHandler):
                 data="Don't forget to include the classes I have in the prompt.",
             )
             summary = oTOCD.generate_response()
+
             st.success(
                 "🎉 Your code has been generated successfully! Press DOWNLOAD at end of output below!!!"
             )
