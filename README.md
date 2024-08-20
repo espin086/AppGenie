@@ -4,6 +4,10 @@
 
 Welcome to **AppGenie**, your one-stop solution for generating high-quality Python projects effortlessly. Whether you're a seasoned developer or just starting out, AppGenie will save you countless hours of coding by leveraging the power of AI and modular programming. 
 
+<a href="https://buymeacoffee.com/jjespinozag" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174">
+</a>
+
 ## 🌟 Features
 
 - **Effortless Code Generation**: Generate well-documented, beautifully formatted, and highly functional Python code with just a few clicks.
